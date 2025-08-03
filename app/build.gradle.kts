@@ -42,7 +42,8 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        // تم تحديث الإصدار هنا من 1.5.1 إلى 1.5.8
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
         resources {
