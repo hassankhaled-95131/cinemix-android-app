@@ -8,22 +8,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.ui.graphics.vector.ImageVector
 
-/**
- * يمثل عنصرًا واحدًا في شريط التنقل السفلي.
- *
- * @property title اسم العنصر الذي سيظهر (اختياري).
- * @property icon أيقونة العنصر.
- * @property screen المسار (Route) المرتبط بهذا العنصر من فئة Screen.
- */
 data class BottomNavItem(
     val title: String,
     val icon: ImageVector,
     val screen: Screen
 ) {
     companion object {
-        /**
-         * قائمة تحتوي على جميع عناصر شريط التنقل السفلي.
-         */
         fun getBottomNavItems(): List<BottomNavItem> {
             return listOf(
                 BottomNavItem(
