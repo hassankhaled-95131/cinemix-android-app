@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      المظهر الأساسي للتطبيق.
+      هذا هو المظهر الذي يتم تطبيقه قبل أن تبدأ واجهة Jetpack Compose بالعمل.
+      نستخدم Theme.SplashScreen لجعل شاشة البداية (Splash Screen) متوافقة مع التصميم.
+    -->
+    <style name="Theme.CineMix" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
