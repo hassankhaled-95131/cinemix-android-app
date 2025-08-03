@@ -17,13 +17,6 @@ import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import java.io.IOException
 
-/**
- * التنفيذ الفعلي لواجهة MovieRepository.
- * هذه الفئة هي المسؤولة عن تنسيق جلب البيانات من مصادرها المختلفة (الشبكة وقاعدة البيانات المحلية).
- *
- * @param api Service للوصول إلى TMDB API.
- * @param dao DAO للوصول إلى قاعدة بيانات Room المحلية.
- */
 class MovieRepositoryImpl(
     private val api: ApiService,
     private val dao: MovieDao
@@ -44,9 +37,9 @@ class MovieRepositoryImpl(
             val newMovies = dao.getMoviesByType(typeTag).map { it.toMovie() }
             emit(Resource.Success(data = newMovies))
         } catch (e: HttpException) {
-            emit(Resource.Error("حدث خطأ غير متوقع!", data = cachedMovies))
+            emit(Resource.Error("حدث خطأ غير متوقع!", cachedMovies))
         } catch (e: IOException) {
-            emit(Resource.Error("لا يمكن الوصول للخادم, يرجى التحقق من اتصالك بالإنترنت.", data = cachedMovies))
+            emit(Resource.Error("لا يمكن الوصول للخادم, يرجى التحقق من اتصالك بالإنترنت.", cachedMovies))
         }
     }
 
@@ -107,7 +100,6 @@ class MovieRepositoryImpl(
         }
     }
 
-    // --- Favorites Implementation ---
     override fun getFavoriteMovieIds(): Flow<List<Int>> {
         return dao.getAllFavorites().map { favoriteEntities ->
             favoriteEntities.map { it.movieId }
@@ -122,7 +114,6 @@ class MovieRepositoryImpl(
         dao.deleteFavorite(movieId = movieId)
     }
 
-    // --- Categories Implementation ---
     override fun getCategories(): Flow<Resource<List<Category>>> = flow {
         emit(Resource.Loading())
         try {
