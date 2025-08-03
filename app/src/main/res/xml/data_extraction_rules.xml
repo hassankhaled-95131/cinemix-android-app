@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Sample data extraction rules file; uncomment and customize as necessary.
+   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
+   for details.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <!--
+        To disable cloud backup, comment out the entire <cloud-backup> section.
+        To restore the legacy backup rules, uncomment the <full-backup-content> section and
+        comment out the <cloud-backup> section.
+        -->
+        <include domain="sharedpref" />
+        <exclude domain="sharedpref" path="device_id.xml" />
+    </cloud-backup>
+    <!--
+    <device-transfer>
+        <include .../>
+        <exclude .../>
+    </device-transfer>
+    -->
+</data-extraction-rules>

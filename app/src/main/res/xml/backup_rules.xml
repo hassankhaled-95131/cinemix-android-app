@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Tells BackupManager which files to back up.
+-->
+<full-backup-content>
+    <!--
+    This is a default backup configuration.
+    To learn more, see the Android Developer Documentation at
+    https://developer.android.com/guide/topics/data/autobackup
+    -->
+    <include domain="sharedpref" path="."/>
+    <exclude domain="sharedpref" path="device_id.xml"/>
+</full-backup-content>
