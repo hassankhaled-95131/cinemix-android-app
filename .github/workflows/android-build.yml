@@ -19,13 +19,15 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: '8.2' # The version from gradle-wrapper.properties
 
     - name: Build with Gradle
-      run: ./gradlew assembleRelease
+      # We use 'gradle' directly instead of './gradlew' to bypass the need for local wrapper files
+      run: gradle :app:assembleRelease
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
