@@ -42,7 +42,6 @@ android {
         compose = true
     }
     composeOptions {
-        // تم تحديث الإصدار هنا من 1.5.1 إلى 1.5.8
         kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
@@ -63,6 +62,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    // تمت إضافة هذه المكتبة لحل مشكلة الأيقونات
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.6")
