@@ -1,4 +1,4 @@
-name: Android CI Build
+name: Android CI Build & Sign
 
 on:
   push:
@@ -21,14 +21,29 @@ jobs:
         distribution: 'temurin'
 
     - name: Set up Gradle
-      uses: gradle/actions/setup-gradle@v3 # v3 is stable and recommended
+      uses: gradle/actions/setup-gradle@v3
 
-    - name: Build with Gradle
+    # --- خطوة فك تشفير وتجهيز المفتاح ---
+    - name: Decode Keystore
+      env:
+        # قراءة السر الذي خزنته في GitHub
+        KEYSTORE_BASE64: ${{ secrets.CINE_KEYSTORE_BASE64 }}
+      run: |
+        echo $KEYSTORE_BASE64 > keystore_base64.txt
+        base64 -d keystore_base64.txt > app/cinemix-keystore.jks
+
+    # --- خطوة البناء مع تمرير الأسرار ---
+    - name: Build and Sign with Gradle
+      env:
+        # تمرير الأسرار كمتغيرات بيئة لعملية البناء
+        CINE_KEYSTORE_FILE_PATH: "cinemix-keystore.jks"
+        CINE_STORE_PASSWORD: ${{ secrets.CINE_STORE_PASSWORD }}
+        CINE_KEY_ALIAS: ${{ secrets.CINE_KEY_ALIAS }}
+        CINE_KEY_PASSWORD: ${{ secrets.CINE_KEY_PASSWORD }}
       run: gradle :app:assembleRelease
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: cinemix-app-release
-        # تم تعديل المسار هنا لاستخدام حرف البدل (*)
+        name: cinemix-app-release-signed
         path: app/build/outputs/apk/release/*.apk
