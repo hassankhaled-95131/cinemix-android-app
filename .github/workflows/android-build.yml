@@ -23,19 +23,19 @@ jobs:
     - name: Set up Gradle
       uses: gradle/actions/setup-gradle@v3
 
-    # --- خطوة فك تشفير وتجهيز المفتاح ---
+    # --- خطوة فك تشفير وتجهيز المفتاح (النسخة المصححة) ---
     - name: Decode Keystore
       env:
-        # قراءة السر الذي خزنته في GitHub
         KEYSTORE_BASE64: ${{ secrets.CINE_KEYSTORE_BASE64 }}
       run: |
-        echo $KEYSTORE_BASE64 > keystore_base64.txt
-        base64 -d keystore_base64.txt > app/cinemix-keystore.jks
+        # طباعة السر في ملف، ثم استخدام grep لحذف الأسطر التي تحتوي على "---"
+        # وأخيراً فك تشفير النص النظيف
+        echo "$KEYSTORE_BASE64" > keystore_encoded.txt
+        grep -v '---' keystore_encoded.txt | base64 -d > app/cinemix-keystore.jks
 
     # --- خطوة البناء مع تمرير الأسرار ---
     - name: Build and Sign with Gradle
       env:
-        # تمرير الأسرار كمتغيرات بيئة لعملية البناء
         CINE_KEYSTORE_FILE_PATH: "cinemix-keystore.jks"
         CINE_STORE_PASSWORD: ${{ secrets.CINE_STORE_PASSWORD }}
         CINE_KEY_ALIAS: ${{ secrets.CINE_KEY_ALIAS }}
