@@ -21,16 +21,14 @@ jobs:
         distribution: 'temurin'
 
     - name: Set up Gradle
-      uses: gradle/actions/setup-gradle@v4
-      with:
-        gradle-version: '8.2' # The version from gradle-wrapper.properties
+      uses: gradle/actions/setup-gradle@v3 # v3 is stable and recommended
 
     - name: Build with Gradle
-      # We use 'gradle' directly instead of './gradlew' to bypass the need for local wrapper files
       run: gradle :app:assembleRelease
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: cinemix-app-release
-        path: app/build/outputs/apk/release/app-release.apk
+        # تم تعديل المسار هنا لاستخدام حرف البدل (*)
+        path: app/build/outputs/apk/release/*.apk
