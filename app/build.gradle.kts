@@ -9,6 +9,7 @@ android {
     namespace = "com.example.cinemix"
     compileSdk = 34
 
+<<<<<<< HEAD
     // --- قسم التوقيع الجديد (الطريقة غير الآمنة) ---
     signingConfigs {
         create("release") {
@@ -21,6 +22,19 @@ android {
         }
     }
     // ------------------------------------------
+=======
+    // --- قسم التوقيع الجديد ---
+    signingConfigs {
+        create("release") {
+            // قراءة معلومات التوقيع من أسرار GitHub Actions
+            storeFile = file(System.getenv("CINE_KEYSTORE_FILE_PATH") ?: "cinemix-keystore.jks")
+            storePassword = System.getenv("CINE_STORE_PASSWORD")
+            keyAlias = System.getenv("CINE_KEY_ALIAS")
+            keyPassword = System.getenv("CINE_KEY_PASSWORD")
+        }
+    }
+    // -------------------------
+>>>>>>> 1c3c72fcb39dc613bccdb31a4ac69f35bdfa387c
 
     defaultConfig {
         applicationId = "com.example.cinemix"
@@ -67,8 +81,7 @@ android {
 }
 
 dependencies {
-
-    // Core & UI
+    // ... (بقية المكتبات تبقى كما هي)
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.2")
@@ -78,40 +91,27 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended:1.6.1")
+<<<<<<< HEAD
 
     // Navigation
+=======
+>>>>>>> 1c3c72fcb39dc613bccdb31a4ac69f35bdfa387c
     implementation("androidx.navigation:navigation-compose:2.7.6")
-
-    // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
-
-    // Hilt (Dependency Injection)
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-compiler:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
-
-    // Retrofit (Networking)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-
-    // Room (Local Database)
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
-
-    // DataStore (Preferences)
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-
-    // Coil (Image Loading)
     implementation("io.coil-kt:coil-compose:2.5.0")
-    
-    // ExoPlayer (Video Playback)
     implementation("androidx.media3:media3-exoplayer:1.2.0")
     implementation("androidx.media3:media3-ui:1.2.0")
-
-    // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
