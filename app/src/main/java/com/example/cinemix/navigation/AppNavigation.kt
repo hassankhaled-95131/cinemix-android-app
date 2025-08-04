@@ -1,10 +1,13 @@
 package com.example.cinemix.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,10 +22,6 @@ import com.example.cinemix.ui.screens.movie_list.MovieListScreen
 import com.example.cinemix.ui.screens.player.PlayerScreen
 import com.example.cinemix.ui.screens.splash.SplashScreen
 
-/**
- * المكون الرئيسي للتنقل في التطبيق (Composable) مع حركات انتقالية.
- * يقوم بإعداد NavHost وتحديد جميع الشاشات المتاحة ومساراتها.
- */
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
@@ -30,11 +29,9 @@ fun AppNavigation() {
     NavHost(
         navController = navController,
         startDestination = Screen.Splash.route,
-        // تحديد الحركات الانتقالية الافتراضية
         enterTransition = { fadeIn(animationSpec = tween(300)) },
         exitTransition = { fadeOut(animationSpec = tween(300)) }
     ) {
-        // شاشة البداية
         composable(route = Screen.Splash.route) {
             SplashScreen(
                 onNavigateToLogin = {
@@ -50,7 +47,6 @@ fun AppNavigation() {
             )
         }
 
-        // شاشة تسجيل الدخول
         composable(route = Screen.Login.route) {
             LoginScreen(
                 onLoginSuccess = {
@@ -64,7 +60,6 @@ fun AppNavigation() {
             )
         }
 
-        // شاشة إنشاء حساب جديد
         composable(
             route = Screen.Register.route,
             enterTransition = {
@@ -92,19 +87,17 @@ fun AppNavigation() {
             )
         }
 
-        // حاوية الشاشات الرئيسية
         composable(route = "main_graph") {
             MainScreen(mainNavController = navController)
         }
 
-        // شاشات تظهر فوق شريط التنقل السفلي
-        val slideUpTransition: AnimatedContentTransitionScope<*>.() -> _ = {
+        val slideUpTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Up,
                 animationSpec = tween(400)
             )
         }
-        val slideDownTransition: AnimatedContentTransitionScope<*>.() -> _ = {
+        val slideDownTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) = {
             slideOutOfContainer(
                 AnimatedContentTransitionScope.SlideDirection.Down,
                 animationSpec = tween(400)

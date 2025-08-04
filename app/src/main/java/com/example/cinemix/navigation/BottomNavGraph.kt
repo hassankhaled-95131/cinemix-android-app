@@ -10,12 +10,6 @@ import com.example.cinemix.ui.screens.home.HomeScreen
 import com.example.cinemix.ui.screens.profile.ProfileScreen
 import com.example.cinemix.ui.screens.search.SearchScreen
 
-/**
- * مخطط تنقل (Navigation Graph) مخصص للشاشات الموجودة في شريط التنقل السفلي.
- *
- * @param mainNavController وحدة التحكم الرئيسية للتطبيق، للانتقال إلى شاشات خارج هذا المخطط (مثل التفاصيل).
- * @param bottomNavController وحدة التحكم الخاصة بالشاشات السفلية فقط.
- */
 @Composable
 fun BottomNavGraph(
     mainNavController: NavHostController,
@@ -29,6 +23,9 @@ fun BottomNavGraph(
             HomeScreen(
                 onMovieClick = { movieId ->
                     mainNavController.navigate(Screen.Details.createRoute(movieId))
+                },
+                onNavigate = { route ->
+                    mainNavController.navigate(route)
                 }
             )
         }
@@ -56,7 +53,6 @@ fun BottomNavGraph(
         composable(route = Screen.Profile.route) {
             ProfileScreen(
                 onLogout = {
-                    // العودة إلى شاشة تسجيل الدخول ومسح كل الشاشات السابقة
                     mainNavController.navigate(Screen.Login.route) {
                         popUpTo("main_graph") { inclusive = true }
                     }

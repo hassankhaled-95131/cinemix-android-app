@@ -9,6 +9,19 @@ android {
     namespace = "com.example.cinemix"
     compileSdk = 34
 
+    // --- قسم التوقيع الجديد (الطريقة غير الآمنة) ---
+    signingConfigs {
+        create("release") {
+            // تحديد مسار الملف مباشرة داخل مجلد app
+            storeFile = file("cinemix-keystore.jks")
+            // كتابة كلمات المرور مباشرة في الكود
+            storePassword = "Hn6178Nh+95131"
+            keyAlias = "cinemix-key"
+            keyPassword = "Hn6178Nh+95131"
+        }
+    }
+    // ------------------------------------------
+
     defaultConfig {
         applicationId = "com.example.cinemix"
         minSdk = 24
@@ -29,6 +42,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // تطبيق إعدادات التوقيع على نسخة الـ Release
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -42,7 +57,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
         resources {
@@ -62,6 +77,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.6")

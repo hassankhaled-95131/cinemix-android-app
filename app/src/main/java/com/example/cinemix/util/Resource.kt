@@ -28,6 +28,7 @@ sealed class Resource<T>(
 
     /**
      * تمثل حالة أن البيانات قيد التحميل.
+     * @param data بيانات قديمة (اختياري) يمكن عرضها أثناء التحميل.
      */
-    class Loading<T> : Resource<T>()
+    class Loading<T>(data: T? = null) : Resource<T>(data)
 }

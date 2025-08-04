@@ -2,6 +2,7 @@ package com.example.cinemix.data.remote
 
 import com.example.cinemix.data.remote.dto.GenreListResponseDto
 import com.example.cinemix.data.remote.dto.MovieTMDbDto
+import com.google.gson.annotations.SerializedName
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -79,8 +80,10 @@ interface ApiService {
     data class TmdbResponseDto(
         val page: Int,
         val results: List<MovieTMDbDto>,
+        // تم تصحيح التعليق هنا
         @SerializedName("total_pages")
         val totalPages: Int,
+        // تم تصحيح التعليق هنا
         @SerializedName("total_results")
         val totalResults: Int
     )
