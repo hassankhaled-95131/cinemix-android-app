@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 name: Android CI Build & Sign (Unsecure)
-=======
-name: Android CI Build & Sign
->>>>>>> 1c3c72fcb39dc613bccdb31a4ac69f35bdfa387c
 
 on:
   push:
@@ -27,28 +23,8 @@ jobs:
     - name: Set up Gradle
       uses: gradle/actions/setup-gradle@v3
 
-<<<<<<< HEAD
     # تم تبسيط خطوة البناء هنا
     - name: Build with Gradle
-=======
-    # --- خطوة فك تشفير وتجهيز المفتاح (النسخة المصححة) ---
-    - name: Decode Keystore
-      env:
-        KEYSTORE_BASE64: ${{ secrets.CINE_KEYSTORE_BASE64 }}
-      run: |
-        # طباعة السر في ملف، ثم استخدام grep لحذف الأسطر التي تحتوي على "---"
-        # وأخيراً فك تشفير النص النظيف
-        echo "$KEYSTORE_BASE64" > keystore_encoded.txt
-        grep -v '---' keystore_encoded.txt | base64 -d > app/cinemix-keystore.jks
-
-    # --- خطوة البناء مع تمرير الأسرار ---
-    - name: Build and Sign with Gradle
-      env:
-        CINE_KEYSTORE_FILE_PATH: "cinemix-keystore.jks"
-        CINE_STORE_PASSWORD: ${{ secrets.CINE_STORE_PASSWORD }}
-        CINE_KEY_ALIAS: ${{ secrets.CINE_KEY_ALIAS }}
-        CINE_KEY_PASSWORD: ${{ secrets.CINE_KEY_PASSWORD }}
->>>>>>> 1c3c72fcb39dc613bccdb31a4ac69f35bdfa387c
       run: gradle :app:assembleRelease
 
     - name: Upload APK
